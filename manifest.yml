@@ -4,6 +4,7 @@ applications:
   memory: 512M
   path: build/
   instances: 1
+  host: CommunityDayMLWeb
   domain: mybluemix.net
   disk_quota: 1024M
   buildpack: https://github.com/cloudfoundry/staticfile-buildpack.git
