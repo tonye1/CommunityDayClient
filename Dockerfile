@@ -1,17 +1,20 @@
-# base image
-FROM node:9.6.1
+# You should always specify a full version here to ensure all of your developers
+# are running the same version of Node.
+FROM node:10.15.1
 
-# set working directory
-RUN mkdir /usr/src/app
-WORKDIR /usr/src/app
+# The base node image sets a very verbose log level.
+ENV NPM_CONFIG_LOGLEVEL warn
 
-# add `/usr/src/app/node_modules/.bin` to $PATH
-ENV PATH /usr/src/app/node_modules/.bin:$PATH
+# Copy all local files into the image.
+COPY . .
 
-# install and cache app dependencies
-COPY package.json /usr/src/app/package.json
-RUN npm install --silent
-RUN npm install react-scripts@1.1.1 -g --silent
+# Build for production.
+RUN npm install
+RUN npm run build 
 
+# Set the command to start the node server.
 # start app
 CMD ["npm", "start"]
+
+# Tell Docker about the port we'll run on.
+EXPOSE 3000
